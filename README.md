@@ -1,5 +1,5 @@
 # Gort
-An elegent implement of quick sort, running speed is much quciker than origin sort function.
+An elegent implement of quick sort, running speed is much faster than origin sort function.
 ``` bash
 go run Example.go 
 Generating pseudo-randeom integers
