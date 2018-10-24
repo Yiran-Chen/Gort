@@ -1,27 +1,36 @@
 package main
 import (
-  "./Gort"
+  "./HeapGort"
+  "./QuickGort"
   "sort"
   "fmt"
-   "time"
+  "time"
   "math/rand"
 )
 func main() {
-  println("Generating pseudo-randeom integers");
+  println("Generating pseudo-randeom integers")
   sampleLength := 100000
-  s := rand.Perm(sampleLength)
-  c := make([]int,sampleLength)
-  copy(c,s)
-  println("Running QuickGort");
-  t1 := time.Now()
-  QuickGort.Ints(s)
-  if(sort.IntsAreSorted(s)){
-    fmt.Printf("QuickGort has been finished in %v\n",time.Since(t1));
-  }else{
-    println("Something wrong in QuickGort");
+  rand.Seed(time.Now().Unix())
+  a := rand.Perm(sampleLength)
+  var algorithms = []string{"QuickGort","Go sort"}
+  var t time.Time;
+  for i := range algorithms {
+    fmt.Println("Running " + algorithms[i]);
+    c := make([]int,sampleLength)
+    copy(c,a)
+    t = time.Now()
+    switch algorithms[i] {
+      case "HeapGort":
+        HeapGort.Ints(c)
+      case "QuickGort":
+        QuickGort.Ints(c)
+      case "Go sort":
+        sort.Ints(c)
+    }
+    if sort.IntsAreSorted(c) {
+      fmt.Printf(algorithms[i]+" has been finished in %v\n",time.Since(t))
+    }else{
+       println("Something wrong in "+algorithms[i])
+    }
   }
-  println("Running go sort");
-  t2 := time.Now()
-  sort.Ints(c)
-  fmt.Printf("Go sort has been finished in %v\n",time.Since(t2));
 }
